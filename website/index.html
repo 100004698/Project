@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Library Project — One Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; max-width: 900px; margin: auto; color:#222; }
+    header { display:flex; align-items:center; gap:16px; }
+    h1 { margin:0; font-size:24px; }
+    .images { display:flex; gap:12px; margin-top:18px; }
+    .images img { width:49%; border:1px solid #ddd; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+    p.lead { margin-top:18px; line-height:1.4; }
+    .meta { margin-top:18px; font-size:14px; color:#444; }
+    footer { margin-top:28px; font-size:13px; color:#666; }
+    .badge { display:inline-block; padding:6px 10px; border-radius:6px; background:#f3f4f6; margin-right:8px; font-weight:600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Library Manager — Mini Project</h1>
+      <div class="meta">
+        <span class="badge">Flask backend</span>
+        <span class="badge">Tkinter GUI</span>
+        <span class="badge">JSON persistence</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="images">
+    <img src="img1.png" alt="App screenshot 1">
+    <img src="img2.png" alt="App screenshot 2">
+  </div>
+
+  <p class="lead">
+    This is a simple local library manager. The desktop GUI allows the user to view a list of media items (books, films, magazines),
+    filter by category, search by exact name, add new items, and delete items. The backend is a Flask server that stores data
+    persistently in <code>data/library.json</code>. The app runs locally on your machine and is intended for demonstration.
+  </p>
+
+  <h3>How to run (short)</h3>
+  <ol>
+    <li>Activate the Python virtual environment: <code>.\venv\Scripts\activate</code> (Windows).</li>
+    <li>Start backend: <code>python backend/app.py</code>.</li>
+    <li>Open a second terminal and run GUI: <code>python frontend/gui.py</code>.</li>
+    <li>Open this page: double-click <code>website/index.html</code>.</li>
+  </ol>
+
+  <footer>
+    Prepared by Farhan Akthar — Advanced Programming Project.
+  </footer>
+</body>
+</html>

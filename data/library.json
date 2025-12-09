@@ -1,0 +1,23 @@
+{
+  "example-1": {
+    "id": "example-1",
+    "name": "Dune",
+    "publication_date": "1965-08-01",
+    "author": "Frank Herbert",
+    "category": "Book"
+  },
+  "example-2": {
+    "id": "example-2",
+    "name": "Inception",
+    "publication_date": "2010-07-16",
+    "author": "Christopher Nolan",
+    "category": "Film"
+  },
+  "15d8da2b-d0e8-44bd-83d3-bd45a14ec331": {
+    "id": "15d8da2b-d0e8-44bd-83d3-bd45a14ec331",
+    "name": "Revenant",
+    "publication_date": "2015-12-25",
+    "author": "Michael Punke",
+    "category": "Film"
+  }
+}
