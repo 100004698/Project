@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "C:\Users\farha\OneDrive\Desktop\SRH projects\library_project\frontend\gui.py", line 208, in <module>
+    self.load_list()
+      ^^^^^
+  File "C:\Users\farha\OneDrive\Desktop\SRH projects\library_project\frontend\gui.py", line 51, in __init__
+  File "C:\Users\farha\OneDrive\Desktop\SRH projects\library_project\frontend\gui.py", line 65, in load_list
+    except requests.exceptions.ConnectionError:
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farha\OneDrive\Desktop\SRH projects\library_project\frontend\gui.py", line 68, in refresh_listbox
+    except requests.exceptions.Timeout:
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farha\anaconda3\Lib\tkinter\__init__.py", line 3279, in delete
+    self.tk.call(self._w, 'delete', first, last)
+_tkinter.TclError: invalid command name ".!frame2.!frame.!listbox"
