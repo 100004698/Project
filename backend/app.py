@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from storage import create_item, get_all, get_by_id, delete_item, find_by_name_exact, filter_by_category
+from .storage import create_item, get_all, get_by_id, delete_item, find_by_name_exact, filter_by_category
 
 app = Flask(__name__)
 
