@@ -19,5 +19,12 @@
     "publication_date": "2015-09-11",
     "author": "Zack Snyder",
     "category": "Book"
+  },
+  "f39cdfd0-4227-4870-a4ac-ec24fb2559d5": {
+    "id": "f39cdfd0-4227-4870-a4ac-ec24fb2559d5",
+    "name": "Inception",
+    "publication_date": "2010-04-25",
+    "author": "Christopher Nolan",
+    "category": "Film"
   }
 }
