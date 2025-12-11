@@ -1,1 +1,23 @@
-{}
+{
+  "a32d5fe1-8e53-4794-9f79-c2e2938ea1e5": {
+    "id": "a32d5fe1-8e53-4794-9f79-c2e2938ea1e5",
+    "name": "Ice and fire",
+    "publication_date": "1996-11-25",
+    "author": "RR Martin",
+    "category": "Book"
+  },
+  "1c582ed2-b13d-41be-b843-2ef64e179336": {
+    "id": "1c582ed2-b13d-41be-b843-2ef64e179336",
+    "name": "Iron Man",
+    "publication_date": "2010-02-25",
+    "author": "James Gunn",
+    "category": "Film"
+  },
+  "e021abeb-f4f4-429d-95e7-172bfe6471b9": {
+    "id": "e021abeb-f4f4-429d-95e7-172bfe6471b9",
+    "name": "Superman",
+    "publication_date": "2015-09-11",
+    "author": "Zack Snyder",
+    "category": "Book"
+  }
+}
