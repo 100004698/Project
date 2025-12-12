@@ -26,5 +26,12 @@
     "publication_date": "2010-04-25",
     "author": "Christopher Nolan",
     "category": "Film"
+  },
+  "49c552ca-348c-4d9b-8fff-dc18bdcbe702": {
+    "id": "49c552ca-348c-4d9b-8fff-dc18bdcbe702",
+    "name": "Snatch",
+    "publication_date": "2000-10-12",
+    "author": "Guy ritchie",
+    "category": "Film"
   }
 }
