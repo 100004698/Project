@@ -1,187 +1,362 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Library Manager — What the App Does (Farhan Akthar)</title>
-  <meta name="description" content="Short, clear one-page site explaining what the Library Manager app does, how to run it, screenshots and a demo script.">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg: #061426;
-      --panel: #0b1b2b;
-      --card: linear-gradient(180deg,#0f2738,#0b1b2b);
-      --muted: #9fb4c8;
-      --text: #e6f7ff;
-      --accent: #60a5fa;
-      --accent2: #5eead4;
-      --success: #34d399;
-      --radius: 12px;
-      --maxw: 980px;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#041022);color:var(--text);-webkit-font-smoothing:antialiased}
-    .wrap{max-width:var(--maxw);margin:34px auto;padding:20px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;color:#042033;font-weight:800;font-size:20px;box-shadow:0 8px 30px rgba(6,24,48,0.6)}
-    h1{margin:0;font-size:20px}
-    .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:18px;align-items:start}
-    @media(max-width:900px){ .grid{grid-template-columns:1fr} .aside{order:2} .main{order:1} }
-    .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 12px 36px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
-    .lead{color:var(--muted);line-height:1.6}
-    .features{margin-top:12px;color:var(--muted)}
-    .features li{margin:8px 0}
-    .images{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .thumb{width:100%;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;display:block}
-    .thumb.small{height:180px;object-fit:cover}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;background:linear-gradient(90deg,var(--accent2),var(--accent));color:#042033}
-    pre.code{background:#041026;padding:12px;border-radius:8px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;font-size:13px;color:#dbeafe;overflow:auto;border:1px solid rgba(255,255,255,0.02)}
-    details{margin-top:8px}
-    summary{cursor:pointer;font-weight:700;color:var(--accent)}
-    .muted{color:var(--muted)}
-    .aside-list{list-style:none;padding:0;margin:0}
-    .aside-list li{padding:10px 0;border-bottom:1px dashed rgba(255,255,255,0.02);color:var(--muted)}
-    .demo{background:linear-gradient(90deg, rgba(95,165,250,0.04), rgba(94,234,212,0.03));padding:12px;border-radius:8px;margin-top:10px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
-    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
-    .light{color:#dbeafe}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Manager - Farhan Akthar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: #e8edf5;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(94, 234, 212, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(94, 234, 212, 0.2);
+            padding: 80px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(50%); }
+        }
+
+        header h1 {
+            font-size: 64px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5eead4 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            letter-spacing: -2px;
+        }
+
+        .author {
+            margin-top: 15px;
+            font-size: 15px;
+            opacity: 0.6;
+            color: #94a3b8;
+        }
+
+        .content {
+            padding: 60px 50px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 38px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #5eead4 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #5eead4, #3b82f6);
+            border-radius: 2px;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.6) 100%);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .intro p {
+            font-size: 19px;
+            line-height: 1.9;
+            color: #cbd5e1;
+        }
+
+        .screenshot-container {
+            margin: 40px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            background: rgba(15, 23, 42, 0.4);
+            padding: 15px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .screenshot-container img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .screenshot-caption {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 15px;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid rgba(94, 234, 212, 0.2);
+        }
+
+        .tech-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #5eead4;
+        }
+
+        .tech-card p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.6) 100%);
+            padding: 30px;
+            border-radius: 16px;
+            border-left: 4px solid #5eead4;
+        }
+
+        .feature-item h4 {
+            color: #5eead4;
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border-top: 1px solid rgba(94, 234, 212, 0.2);
+            text-align: center;
+            padding: 50px 30px;
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 50px 30px;
+            }
+            header h1 {
+                font-size: 42px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">LM</div>
-        <div>
-          <h1>Library Manager</h1>
-          <div class="subtitle">Desktop GUI + local Flask backend — quick demo ready</div>
+    <div class="container">
+        <header>
+            <h1>📚 Library Manager</h1>
+            <div class="author">Developed by Farhan Akthar</div>
+        </header>
+
+        <div class="content">
+            <div class="intro">
+                <p><strong>Library Manager</strong> is a simple desktop application designed to manage a small collection of books, films, and magazines. It includes a Tkinter-based GUI that communicates with a Flask REST API, and all items are saved locally in a JSON file. This makes the system easy to run, understand, and evaluate.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Application Interface</h2>
+                <div class="screenshot-container">
+                    <img src="img1.png" alt="Library Manager Main Interface">
+                </div>
+                <p class="screenshot-caption">Main interface showing media list and item details section</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Technology Stack</h2>
+                <div class="tech-stack">
+                    <div class="tech-card">
+                        <h3>🎨 Tkinter (Frontend)</h3>
+                        <p>Provides the desktop interface for listing, viewing, adding, and removing items.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h3>⚙️ Flask (Backend)</h3>
+                        <p>REST API with endpoints for retrieving, creating, editing, and deleting media entries.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h3>💾 JSON Storage</h3>
+                        <p>Data is stored in <code>data/library.json</code> in a readable structured format.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h3>🧪 pytest</h3>
+                        <p>Backend test cases for verifying core functionality and validation logic.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Core Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h4>📋 List & Details</h4>
+                        <p>View the complete media library and inspect details for any selected item.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🔍 Filter & Search</h4>
+                        <p>Filter by category or search by exact name for quick access.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>✨ Create Items</h4>
+                        <p>Add new entries with field validation including proper date format.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>✏️ Edit Items</h4>
+                        <p>Modify existing entries while maintaining consistent data.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🗑️ Delete Entries</h4>
+                        <p>Remove items with confirmation prompts to avoid accidental deletion.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>💾 Persistent Storage</h4>
+                        <p>All updates are saved in a JSON file for easy inspection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">User Experience</h2>
+                <div class="screenshot-container">
+                    <img src="img2.png" alt="Library Manager Dialog">
+                </div>
+                <p class="screenshot-caption">Creation/edit dialog with clean layout and field validation</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Installation & Setup</h2>
+                <div class="code-block">
+pip install --upgrade pip
+pip install flask requests pytest
+
+# Start backend
+python backend\app.py
+
+# Start GUI
+python frontend\gui.py
+
+# Optional tests
+pytest -v
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Project Structure</h2>
+                <div class="code-block">
+project/
+│
+├── backend/
+│   ├── app.py
+│   └── storage.py
+│
+├── frontend/
+│   └── gui.py
+│
+├── data/
+│   └── library.json
+│
+└── tests/
+                </div>
+            </div>
         </div>
-      </div>
-      <div style="text-align:right">
-        <div class="muted">Prepared by <strong>Farhan Akthar</strong></div>
-      </div>
-    </header>
 
-    <div class="grid">
-      <!-- MAIN -->
-      <main class="main">
-        <!-- WHAT THE APP DOES -->
-        <section class="card">
-          <h2 style="margin-top:0">What the app does — simple explanation</h2>
-          <p class="lead">Library Manager is a small desktop application to manage a personal collection of media items (books, films, magazines). It has two parts:</p>
-          <ul class="features">
-            <li><strong>Frontend (desktop GUI)</strong>: `frontend/gui.py` — built with Tkinter. Shows a list of items, a details pane, category filter, exact-name search, and buttons to create or delete items.</li>
-            <li><strong>Backend (server)</strong>: `backend/app.py` — built with Flask. Provides REST endpoints (list, search by name, get by id, create, delete) and stores data in `data/library.json`.</li>
-          </ul>
-
-          <h3 style="margin-top:12px">How it behaves (user flows)</h3>
-          <ul class="features">
-            <li><strong>View list:</strong> on start the GUI loads all items from the backend (example items: Ice and fire, Iron Man, Superman, Inception).</li>
-            <li><strong>Filter:</strong> choose Book / Film / Magazine and press Filter — GUI asks backend for the filtered list.</li>
-            <li><strong>Exact-name search:</strong> type the full exact name (e.g. <code>Inception</code>) and press Search — backend returns matching items.</li>
-            <li><strong>Create:</strong> click Create, fill the modal (name, date YYYY-MM-DD, author, category) — backend validates and saves the new item with a UUID id.</li>
-            <li><strong>Delete:</strong> select an item and press Delete (confirmation shown) — backend removes the item from the JSON file.</li>
-          </ul>
-
-          <div class="demo">
-            <strong>Storage format:</strong> items are saved in `data/library.json` as a mapping from UUID → record. Example record fields: <code>id, name, publication_date, author, category</code>.
-          </div>
-        </section>
-
-        <!-- HOW TO RUN -->
-        <section class="card" style="margin-top:14px" id="install">
-          <h2 style="margin-top:0">How to run (copy & paste — Windows)</h2>
-          <p class="muted">Open two terminals. First start the backend, then the GUI. These commands assume you run them from the project root (the folder that contains `backend/`, `frontend/`, `data/`).</p>
-
-          <h4 style="margin-top:8px">1) Install dependencies (one time)</h4>
-          <pre class="code">pip install --upgrade pip
-pip install flask requests pytest</pre>
-
-          <h4 style="margin-top:8px">2) Start the backend (terminal 1)</h4>
-          <pre class="code">python backend\app.py
-# Expected output: * Running on http://127.0.0.1:5000</pre>
-
-          <h4 style="margin-top:8px">3) Start the GUI (terminal 2)</h4>
-          <pre class="code">python frontend\gui.py
-# The Tkinter window will open and load items from the backend</pre>
-
-          <p class="muted">If the GUI shows "Cannot connect to backend server", make sure the backend terminal shows it is running on <code>http://127.0.0.1:5000</code>. The GUI uses that exact URL (see `BASE = "http://127.0.0.1:5000"` at top of `frontend/gui.py`).</p>
-        </section>
-
-        <!-- SCREENSHOTS -->
-        <section class="card" style="margin-top:14px" id="screenshots">
-          <h2 style="margin-top:0">Screenshots</h2>
-          <p class="muted">Click thumbnails to view larger.</p>
-          <div class="images">
-            <a href="img1.png" target="_blank"><img src="img1.png" alt="Main view" class="thumb small"></a>
-            <a href="img2.png" target="_blank"><img src="img2.png" alt="Details view" class="thumb small"></a>
-          </div>
-          <details style="margin-top:10px">
-            <summary>Image notes</summary>
-            <p class="muted">Left screenshot: item list and controls (Filter, Search). Right screenshot: details pane showing metadata for a selected item.</p>
-          </details>
-        </section>
-
-        <!-- DEMO SCRIPT -->
-        <section class="card" style="margin-top:14px" id="demo">
-          <h2 style="margin-top:0">Short demo script (say this in ~60 seconds)</h2>
-          <div class="muted">
-            <ol>
-              <li>“I will start the backend server. You can see it running at <code>http://127.0.0.1:5000</code>.”</li>
-              <li>“Now I open the GUI. It loads existing items from the backend (examples: Ice and fire, Inception).”</li>
-              <li>“I click an item to show its details (name, author, publication date, category).”</li>
-              <li>“I filter by category (Book) to show only books, then search exact name ‘Inception’.”</li>
-              <li>“I’ll create a short test item (name + YYYY-MM-DD + author + category) — it appears in the list — then I delete it to show full create/delete lifecycle.”</li>
-              <li>“Data is stored in a JSON file on disk so it persists between runs.”</li>
-            </ol>
-          </div>
-        </section>
-      </main>
-
-      <!-- ASIDE -->
-      <aside class="aside">
-        <div class="card">
-          <h3 style="margin-top:0">Essential info</h3>
-          <ul class="aside-list">
-            <li><strong>Backend base URL:</strong> <span class="muted">http://127.0.0.1:5000</span></li>
-            <li><strong>GUI command:</strong> <span class="muted">python frontend\gui.py</span></li>
-            <li><strong>Data:</strong> <span class="muted">data/library.json</span></li>
-            <li><strong>Sample items:</strong> Ice and fire, Iron Man, Superman, Inception</li>
-          </ul>
-
-          <h4 style="margin-top:12px">Notes for presentation</h4>
-          <ul class="aside-list">
-            <li>Open VSCode and Sourcetree before demo (show commits).</li>
-            <li>Keep backend terminal visible while demoing the GUI.</li>
-            <li>If an error happens, show the error message in the terminal; it helps grading.</li>
-          </ul>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <h4 style="margin-top:0">Tests (short)</h4>
-          <p class="muted">Run `pytest -q` from the project root to execute the small test suite that checks backend create/get/delete flows.</p>
-        </div>
-      </aside>
+        <footer>
+            <p><strong>Library Manager</strong></p>
+            <p style="opacity: 0.7;">Developed by Farhan Akthar</p>
+            <p style="opacity: 0.5; font-size: 14px;">Python • Flask • Tkinter • REST API • JSON</p>
+        </footer>
     </div>
-
-    <footer>
-      <p class="muted">© Library Manager — Farhan Akthar · Last updated: <span id="buildDate"></span></p>
-    </footer>
-  </div>
-
-  <script>
-    // set build date
-    document.getElementById('buildDate').textContent = (new Date()).toLocaleDateString();
-
-    // smooth scrolling for in-page links (if any)
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      a.addEventListener('click', function(e){
-        var t = document.querySelector(a.getAttribute('href'));
-        if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
-      });
-    });
-  </script>
 </body>
 </html>

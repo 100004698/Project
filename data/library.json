@@ -33,5 +33,47 @@
     "publication_date": "2000-10-12",
     "author": "Guy ritchie",
     "category": "Film"
+  },
+  "3ca3e595-36d8-49da-899e-20dd796f61ba": {
+    "id": "3ca3e595-36d8-49da-899e-20dd796f61ba",
+    "name": "Neo culture",
+    "publication_date": "2025-03-01",
+    "author": "Akira tanaka",
+    "category": "Magazine"
+  },
+  "c948ef28-8320-44b7-8718-4347407ce0de": {
+    "id": "c948ef28-8320-44b7-8718-4347407ce0de",
+    "name": "Fitness revolution",
+    "publication_date": "2025-12-05",
+    "author": "Jeff nippard",
+    "category": "Magazine"
+  },
+  "7dec6540-f2e0-480b-91c1-c6ad036397ba": {
+    "id": "7dec6540-f2e0-480b-91c1-c6ad036397ba",
+    "name": "Gamers edge",
+    "publication_date": "2023-05-10",
+    "author": "Dylan kim",
+    "category": "Magazine"
+  },
+  "6ef24172-bb77-4e05-86da-0ff37cc4d932": {
+    "id": "6ef24172-bb77-4e05-86da-0ff37cc4d932",
+    "name": "Iron and ember",
+    "publication_date": "2022-11-25",
+    "author": "Ronan Fletcher",
+    "category": "Book"
+  },
+  "fc29b43b-2afe-41dd-85c6-c7092a6ae571": {
+    "id": "fc29b43b-2afe-41dd-85c6-c7092a6ae571",
+    "name": "The memory theif",
+    "publication_date": "2025-08-12",
+    "author": "Gabriel santos",
+    "category": "Book"
+  },
+  "1f4b54a4-777d-43f1-93d3-2c02ec4fe4ab": {
+    "id": "1f4b54a4-777d-43f1-93d3-2c02ec4fe4ab",
+    "name": "Skyfall protocol",
+    "publication_date": "2025-10-12",
+    "author": "Ivan volkov",
+    "category": "Film"
   }
 }
