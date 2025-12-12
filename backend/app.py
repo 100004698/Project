@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
-from .storage import create_item, get_all, get_by_id, delete_item, find_by_name_exact, filter_by_category
+# Use a direct import so the module can be run as a script
+from storage import create_item, get_all, get_by_id, delete_item, find_by_name_exact, filter_by_category
 
 app = Flask(__name__)
 
