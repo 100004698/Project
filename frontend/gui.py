@@ -137,6 +137,9 @@ class App(tk.Tk):
         create_btn = ttk.Button(right_frame, text="✨ Create", command=self.create_item)
         create_btn.pack(side="left", padx=4)
         
+        edit_btn = ttk.Button(right_frame, text="✏️ Edit", command=self.edit_selected)
+        edit_btn.pack(side="left", padx=4)
+        
         delete_btn = ttk.Button(right_frame, text="🗑️ Delete", command=self.delete_selected)
         delete_btn.pack(side="left", padx=4)
 
@@ -186,10 +189,10 @@ class App(tk.Tk):
                                    height=25,
                                    bg=COLORS["white"],
                                    fg=COLORS["fg"],
-                                   font=('Segoe UI', 10),
+                                   font=('Segoe UI', 11, 'bold'),
                                    relief="flat",
-                                   padx=10,
-                                   pady=10,
+                                   padx=15,
+                                   pady=15,
                                    wrap="word",
                                    state="normal")
         self.details_text.pack(fill="y", expand=True)
@@ -233,7 +236,9 @@ class App(tk.Tk):
         for k, v in item.items():
             if k == "id":
                 continue
-            lines.append(f"{k}: {v}")
+            # Format key with better spacing
+            key_fmt = k.replace("_", " ").title()
+            lines.append(f"{key_fmt}:\n{v}\n")
         txt = "\n".join(lines)
         self.details_text.delete("1.0", tk.END)
         self.details_text.insert(tk.END, txt)
@@ -257,6 +262,151 @@ class App(tk.Tk):
             messagebox.showerror("Connection Error", "Cannot connect to backend server.")
         except Exception as e:
             messagebox.showerror("Search Error", f"Search failed:\n{str(e)}")
+
+    def edit_selected(self):
+        """Open a modal dialog to edit the selected item with validation."""
+        sel = self.listbox.curselection()
+        if not sel:
+            messagebox.showwarning("No Selection", "Please select an item to edit.")
+            return
+        idx = sel[0]
+        item = self.items[idx]
+        item_id = item.get("id")
+
+        dlg = tk.Toplevel(self)
+        dlg.title("Edit Item")
+        dlg.transient(self)
+        dlg.grab_set()
+        dlg.resizable(False, False)
+        dlg.configure(bg=COLORS["bg"])
+        
+        # Configure dialog style
+        dlg_style = ttk.Style()
+        dlg_style.configure('Dialog.TLabel',
+                          background=COLORS["bg"],
+                          foreground=COLORS["fg"],
+                          font=('Segoe UI', 10))
+        dlg_style.configure('Dialog.TFrame',
+                          background=COLORS["bg"])
+
+        name_var = tk.StringVar(value=item.get("name", ""))
+        pub_var = tk.StringVar(value=item.get("publication_date", ""))
+        author_var = tk.StringVar(value=item.get("author", ""))
+        category_var = tk.StringVar(value=item.get("category", "Book"))
+
+        frm = ttk.Frame(dlg, padding=20)
+        frm.grid(row=0, column=0, sticky="nsew")
+
+        # Title
+        title_lbl = tk.Label(frm, text="✏️ Edit Item",
+                            bg=COLORS["bg"],
+                            fg=COLORS["primary"],
+                            font=('Segoe UI', 14, 'bold'))
+        title_lbl.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 20))
+
+        # Name
+        ttk.Label(frm, text="Name:", style='Dialog.TLabel').grid(row=1, column=0, sticky="w", pady=8)
+        name_entry = ttk.Entry(frm, textvariable=name_var, width=40, font=('Segoe UI', 10))
+        name_entry.grid(row=1, column=1, pady=8, padx=(10, 0))
+        name_entry.focus()
+
+        # Publication date
+        ttk.Label(frm, text="Publication Date:", style='Dialog.TLabel').grid(row=2, column=0, sticky="w", pady=8)
+        date_hint = tk.Label(frm, text="(YYYY-MM-DD format)",
+                            bg=COLORS["bg"],
+                            fg="#7F8C8D",
+                            font=('Segoe UI', 8))
+        date_hint.grid(row=2, column=1, sticky="w", padx=(10, 0))
+        pub_entry = ttk.Entry(frm, textvariable=pub_var, width=40, font=('Segoe UI', 10))
+        pub_entry.grid(row=3, column=1, pady=(0, 8), padx=(10, 0))
+
+        # Author
+        ttk.Label(frm, text="Author:", style='Dialog.TLabel').grid(row=4, column=0, sticky="w", pady=8)
+        author_entry = ttk.Entry(frm, textvariable=author_var, width=40, font=('Segoe UI', 10))
+        author_entry.grid(row=4, column=1, pady=8, padx=(10, 0))
+
+        # Category
+        ttk.Label(frm, text="Category:", style='Dialog.TLabel').grid(row=5, column=0, sticky="w", pady=8)
+        cat_combo = ttk.Combobox(frm, textvariable=category_var, 
+                                values=["Book", "Film", "Magazine"], 
+                                width=38, state="readonly", font=('Segoe UI', 10))
+        cat_combo.grid(row=5, column=1, pady=8, padx=(10, 0))
+
+        btn_frame = ttk.Frame(frm)
+        btn_frame.grid(row=6, column=0, columnspan=2, pady=(20, 0))
+
+        def on_ok():
+            name = name_var.get().strip()
+            pub = pub_var.get().strip()
+            author = author_var.get().strip()
+            category = category_var.get().strip()
+            
+            # Validation
+            if not name:
+                messagebox.showwarning("Validation Error", "Name is required.", parent=dlg)
+                return
+            if not pub:
+                messagebox.showwarning("Validation Error", "Publication date is required.", parent=dlg)
+                return
+            if not author:
+                messagebox.showwarning("Validation Error", "Author is required.", parent=dlg)
+                return
+            if not category:
+                messagebox.showwarning("Validation Error", "Category is required.", parent=dlg)
+                return
+            
+            # Validate date format
+            if not re.match(r'^\d{4}-\d{2}-\d{2}$', pub):
+                messagebox.showwarning("Validation Error", "Date must be in YYYY-MM-DD format.", parent=dlg)
+                return
+            
+            dlg.result = {
+                "name": name,
+                "publication_date": pub,
+                "author": author,
+                "category": category
+            }
+            dlg.destroy()
+
+        def on_cancel():
+            dlg.result = None
+            dlg.destroy()
+
+        ok_btn = ttk.Button(btn_frame, text="✅ Save", command=on_ok)
+        ok_btn.pack(side="left", padx=6)
+        
+        cancel_btn = ttk.Button(btn_frame, text="❌ Cancel", command=on_cancel)
+        cancel_btn.pack(side="left", padx=6)
+
+        # Center the dialog over the main window
+        self.update_idletasks()
+        dlg.update_idletasks()
+        x = self.winfo_rootx() + (self.winfo_width() // 2) - (dlg.winfo_reqwidth() // 2)
+        y = self.winfo_rooty() + (self.winfo_height() // 2) - (dlg.winfo_reqheight() // 2)
+        dlg.geometry(f"+{x}+{y}")
+
+        dlg.result = None
+        self.wait_window(dlg)
+
+        if not getattr(dlg, 'result', None):
+            return
+
+        payload = dlg.result
+
+        try:
+            r = requests.put(f"{BASE}/media/{item_id}", json=payload, timeout=10)
+            r.raise_for_status()
+            messagebox.showinfo("Success", f"✅ Item '{payload['name']}' updated successfully!")
+            self.load_list()
+        except requests.exceptions.ConnectionError:
+            messagebox.showerror("Error", "Cannot connect to backend server.")
+        except Exception as e:
+            # Try to parse error from server
+            try:
+                error_detail = r.json().get('error', str(e))
+            except:
+                error_detail = str(e)
+            messagebox.showerror("Update Failed", f"{error_detail}")
 
     def create_item(self):
         """Open a modal dialog to create a new item with validation."""

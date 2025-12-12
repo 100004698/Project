@@ -73,3 +73,39 @@ def find_by_name_exact(name):
 
 def filter_by_category(category):
     return [i for i in load_db().values() if i.get("category") == category]
+
+def update_item(item_id, name, pub_date, author, category):
+    """Update an existing item with validation."""
+    # Validate all inputs
+    if not name or not isinstance(name, str) or not name.strip():
+        raise ValueError("Name is required and must be a non-empty string")
+    if not pub_date or not isinstance(pub_date, str) or not pub_date.strip():
+        raise ValueError("Publication date is required")
+    if not author or not isinstance(author, str) or not author.strip():
+        raise ValueError("Author is required and must be a non-empty string")
+    if not category or not isinstance(category, str) or not category.strip():
+        raise ValueError("Category is required")
+    
+    # Validate date format (YYYY-MM-DD)
+    if not re.match(r'^\d{4}-\d{2}-\d{2}$', pub_date.strip()):
+        raise ValueError("Publication date must be in YYYY-MM-DD format")
+    
+    # Validate category
+    valid_categories = ["Book", "Film", "Magazine"]
+    if category.strip() not in valid_categories:
+        raise ValueError(f"Category must be one of: {', '.join(valid_categories)}")
+    
+    db = load_db()
+    if item_id not in db:
+        raise ValueError("Item not found")
+    
+    item = {
+        "id": item_id,
+        "name": name.strip(),
+        "publication_date": pub_date.strip(),
+        "author": author.strip(),
+        "category": category.strip()
+    }
+    db[item_id] = item
+    save_db(db)
+    return item

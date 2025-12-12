@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 # Use a direct import so the module can be run as a script
-from storage import create_item, get_all, get_by_id, delete_item, find_by_name_exact, filter_by_category
+from storage import create_item, get_all, get_by_id, delete_item, find_by_name_exact, filter_by_category, update_item
 
 app = Flask(__name__)
 
@@ -51,6 +51,22 @@ def delete_media(item_id):
             return jsonify({"deleted": item_id}), 200
         else:
             return jsonify({"error": "Item not found"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+@app.route("/media/<item_id>", methods=["PUT"])
+def update_media(item_id):
+    try:
+        data = request.get_json()
+        required = ("name", "publication_date", "author", "category")
+        if not data or not all(k in data for k in required):
+            return jsonify({"error": "Missing required fields: name, publication_date, author, category"}), 400
+        
+        # Call update_item which will validate
+        item = update_item(item_id, data["name"], data["publication_date"], data["author"], data["category"])
+        return jsonify(item), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
