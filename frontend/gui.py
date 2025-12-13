@@ -4,6 +4,11 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import requests
 import re
+import os
+import sys
+import time
+import subprocess
+from pathlib import Path
 
 BASE = "http://127.0.0.1:5000"
 
@@ -219,11 +224,24 @@ class App(tk.Tk):
         self.refresh_listbox()
 
     def refresh_listbox(self):
-        self.listbox.delete(0, tk.END)
+        # Guard UI updates in case widgets are not yet available or were destroyed.
+        try:
+            self.listbox.delete(0, tk.END)
+        except (AttributeError, tk.TclError):
+            return
+
         for it in self.items:
             display = f"{it.get('name')} ({it.get('category')})"
-            self.listbox.insert(tk.END, display)
-        self.details_text.delete("1.0", tk.END)
+            try:
+                self.listbox.insert(tk.END, display)
+            except tk.TclError:
+                # If insertion fails, stop updating the listbox.
+                break
+
+        try:
+            self.details_text.delete("1.0", tk.END)
+        except (AttributeError, tk.TclError):
+            pass
 
     def show_details(self, event=None):
         sel = self.listbox.curselection()
@@ -577,8 +595,57 @@ class App(tk.Tk):
             messagebox.showerror("Delete Error", f"Failed to delete item:\n{str(e)}")
 
 if __name__ == "__main__":
-    import traceback, sys, os
+    import traceback
+
+    def ensure_backend_running(timeout: float = 5.0) -> bool:
+        """Ensure the Flask backend is running; if not, try to start it.
+
+        Returns True if backend responds within timeout, False otherwise.
+        """
+        try:
+            requests.get(f"{BASE}/media", timeout=1).raise_for_status()
+            return True
+        except Exception:
+            pass
+
+        # Try to start the backend using the same Python interpreter.
+        backend_dir = Path(__file__).resolve().parents[1] / "backend"
+        backend_script = backend_dir / "app.py"
+        if not backend_script.exists():
+            print("Backend script not found:", backend_script)
+            return False
+
+        # Prepare detached process flags for Windows; fallback to 0 on other platforms.
+        creationflags = 0
+        if sys.platform.startswith("win"):
+            # DETACHED_PROCESS prevents the child console from closing the parent
+            creationflags = getattr(subprocess, "DETACHED_PROCESS", 0)
+
+        log_path = backend_dir / "backend_start.log"
+        try:
+            with open(log_path, "a", encoding="utf-8") as out:
+                subprocess.Popen([sys.executable, str(backend_script)], cwd=str(backend_dir), stdout=out, stderr=out, creationflags=creationflags)
+        except Exception as e:
+            print("Failed to start backend process:", e)
+            return False
+
+        # Wait for backend to become responsive
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            try:
+                r = requests.get(f"{BASE}/media", timeout=1)
+                if r.status_code == 200:
+                    return True
+            except Exception:
+                time.sleep(0.25)
+        return False
+
     try:
+        # Attempt to ensure backend is running before creating the GUI.
+        started = ensure_backend_running(timeout=5.0)
+        if not started:
+            print("Warning: backend did not start or is unreachable. GUI will still run but features may be limited.")
+
         app = App()
         app.mainloop()
     except Exception:
